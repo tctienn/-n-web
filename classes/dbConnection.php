@@ -1,10 +1,15 @@
 <?php
 class dbConnection
 {
+    // private $servername = "localhost";
+    // private $username = "id19895264_teea";
+    // private $password = "asdadadaw1!?A";
+    // private $dbname = "id19895264_tee";
+
     private $servername = "localhost";
-    private $username = "id19895264_teea";
-    private $password = "asdadadaw1!?A";
-    private $dbname = "id19895264_tee";
+    private $username = "root";
+    private $password = "";
+    private $dbname = "tee";
 
     public function __construct()
     {

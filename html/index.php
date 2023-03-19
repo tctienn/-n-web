@@ -10,6 +10,7 @@
     $pro = new stdclass;
     $pro->id="";
     $pro->cout=0;
+    
     if(!isset($_SESSION['cart']))
         {           
             $_SESSION['cart']=$arr;
