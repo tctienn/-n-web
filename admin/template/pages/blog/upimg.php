@@ -13,7 +13,7 @@
         $uploadeFiles = $_FILES['img']; //biến mảng toàn cục $_FILES // là name của input type file
         $errors = uploadFiles($uploadeFiles);
         // $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        $baseURL='https://objdemo.000webhostapp.com/obj/admin/template/pages/blog/';
+        $baseURL='http://localhost/public_html2/admin/template/pages/blog/';
      
         // var_dump($baseURL);exit;
         // $allFiless = getAllFiles();
@@ -37,7 +37,7 @@
          $uploadeFiles = $_FILES['img2']; //biến mảng toàn cục $_FILES // là name của input type file
          $errors = uploadFiles($uploadeFiles);
          // $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-         $baseURL='https://objdemo.000webhostapp.com/admin/template/pages/blog/';
+         $baseURL='http://localhost/public_html2/admin/template/pages/blog/';
       
          // var_dump($baseURL);exit;
          // $allFiless = getAllFiles();

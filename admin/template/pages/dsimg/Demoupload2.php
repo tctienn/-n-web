@@ -37,7 +37,7 @@
     
     <?php
     // $baseURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    $baseURL='https://objdemo.000webhostapp.com/admin/template/pages/sanpham/';
+    $baseURL='http://localhost/public_html2/admin/template/pages/sanpham';
      
     // var_dump($baseURL);exit;
         // $allFiless = getAllFiles();

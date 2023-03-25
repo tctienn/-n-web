@@ -103,7 +103,7 @@ if (isset($_GET['action']) && $_GET['action'] == "login") {
             padding: 0;
             /* background-color: #0277bd; */
             height: 100vh;
-            background-image: url('https://acegif.com/wp-content/gifs/starfall-gif-46.gif');
+            background-image: url('https://i.pinimg.com/originals/fa/82/56/fa825631e92ac7017bd079158431eef7.gif');
             
         
             background-size: 100% 100%;

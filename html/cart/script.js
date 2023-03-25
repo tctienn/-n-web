@@ -60,7 +60,7 @@ function recalculateCart() {
 function updateQuantity(quantityInput) {
   /* Calculate line price */
   var productRow = $(quantityInput).parent().parent();
-  var price = parseFloat(productRow.children('.product-price').text());
+  var price = parseFloat(productRow.children('.product-price').text()) *1000;
   var quantity = $(quantityInput).val();
   var linePrice = price * quantity;
   // alert(linePrice);

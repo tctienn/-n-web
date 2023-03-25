@@ -181,7 +181,7 @@
                     <iconify-icon icon="el:shopping-cart" style="color: white; margin-top: -15px;" width="27"
                         height="31"></iconify-icon> <div class="number_cart"><b><?=count($_SESSION['cart'])?></b></div> &nbsp;
                     <p style="margin-top: 6%; margin-left: -7%;">
-                        <a href="./cart/index.php" style="color: white; text-decoration: none;" >Giỏ hàng</a>
+                        <a href="./html/cart/index.php" style="color: white; text-decoration: none;" >Giỏ hàng</a>
                     </p>
 
                     <p style="color: white;  margin-left: 10px; display: flex; flex-direction: column;">
@@ -432,7 +432,7 @@
                                     ?>
                                         
                                         <div class="item_product col-md-2 ">
-                                            <img class="img_slide" src="./image/00008138-xisat-kid-75ml-8547-5bf4_large.webp"
+                                            <img class="img_slide" src="<?=$row['img']?>"
                                                 alt="">
                                             <p><?=$row['sp_name']?></p>
                                             <p>
@@ -646,7 +646,7 @@
                                         }
                                     ?>
                                     <div class="imgproduct"><img class="img_product" src="<?=$row['img']?>" alt=""></div>
-                                    <a href="./product_item.php?id=<?= $row['sp_id']?>" style="color: black; text-decoration: none;"><input type="text" style="border: none;" readonly value="<?= $row['sp_name']?>"></a>
+                                    <a href="./html/product_item.php?id=<?= $row['sp_id']?>" style="color: black; text-decoration: none;"><input type="text" style="border: none;" readonly value="<?= $row['sp_name']?>"></a>
                                     <p>
                                         <b><?=$row['sp_gia']?>đ</b>/hộp
                                     </p>
@@ -815,7 +815,7 @@
                         <img src="<?=$row['img1']?>" alt="">
                         <div style="margin-left: 10px;">
                             <p>
-                            <a href="./blog.php?id=<?=$row['id']?>" id="ab"><h4> <?=$row['title']?></h4></a>
+                            <a href="./html/blog.php?id=<?=$row['id']?>" id="ab"><h4> <?=$row['title']?></h4></a>
                             </p>
                         </div>
                     </div>
@@ -840,7 +840,7 @@
                                         
                                             <img src="<?=$row['img1']?>" style="width: 100px;  height:76px;  " alt="">
                                             <div style=" overflow: hidden; overflow: hidden; height: 52px; ">
-                                                <b><a href="./blog.php?id=<?=$row['id']?>" id="ab"><?=$row ['title']?></a></b>
+                                                <b><a href="./html/blog.php?id=<?=$row['id']?>" id="ab"><?=$row ['title']?></a></b>
                                             </div>
                                             <div style=" font-size: 10px; width: 20px; height: 17px; ">
                                                 <?=date('d/m/Y ',$row["create"])?>   

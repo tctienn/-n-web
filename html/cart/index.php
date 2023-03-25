@@ -101,6 +101,7 @@
         </div>
       <?php
       $sum+=(float)$row['gia']*$_SESSION['cart'][$i]->cout;
+      // echo $sum;
     }
   }
   
@@ -185,7 +186,8 @@
 ?>
 
 <!-- partial -->
-  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script  src="./script.js"></script>
 
 </body>
 </html>
