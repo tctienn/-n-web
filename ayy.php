@@ -1,4 +1,5 @@
 <?php
+   
      require ('./classes/dbConnection.php');
      $dbConnection = new dbConnection();
      $conn = $dbConnection->getConnection(); 

@@ -47,6 +47,16 @@
                                             alt="User-Profile-Image">
                                     </div>
                                     <h6 class="f-w-600"><?=$row['usename']?></h6>
+                                    <?php
+                                        if($row['is_admin']==1)
+                                        {
+                                            ?>
+                                                <a href="../admin/template/index_admin.php" style=" margin-right:50px " >
+                                                    tới trang admin
+                                                </a>
+                                            <?php
+                                        }
+                                    ?>
                                     <a href="../logout.php">logout</a>
                                     
                                     <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>

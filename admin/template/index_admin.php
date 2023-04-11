@@ -1,46 +1,46 @@
-<?php 
-  session_start();
-  require_once ("../../classes/dbConnection.php");
-    $dbConnection = new dbConnection();
-    $conn = $dbConnection->getConnection();
-    //đếm số lượng sản phẩm hiện tại
-    $sql = "SELECT * FROM sanpham where deleted=1 ";
-    $sumrow = $conn->query($sql);
-    $sumrow = mysqli_num_rows( $sumrow);
-    //đếm số sản phẩm đã xóa
-    $sql2 = "SELECT * FROM sanpham where deleted=0 ";
-    $daxoa = $conn->query($sql2);
-    $daxoa = mysqli_num_rows( $daxoa);
-    //user
-    $sql4 = "SELECT * FROM user ";
-    $user_c = $conn->query($sql4);
-    $user_c = mysqli_num_rows( $user_c);
-        // admin
-        $sql5 = "SELECT * FROM user where is_admin=1  ";
-        $admin_c = $conn->query($sql5);
-        $admin_c = mysqli_num_rows( $admin_c);
-    //đếm số danh mục
-    $sql3 = "SELECT * FROM danhmuc ";
-    $dm_cout = $conn->query($sql3);
-    $dm_cout = mysqli_num_rows( $dm_cout);
-    // đếm blog
-    $sql4 = "SELECT * FROM blog ";
-    $blog_cout = $conn->query($sql4);
-    $blog_cout = mysqli_num_rows( $blog_cout);
+<?php
+session_start();
+require_once("../../classes/dbConnection.php");
+$dbConnection = new dbConnection();
+$conn = $dbConnection->getConnection();
+//đếm số lượng sản phẩm hiện tại
+$sql = "SELECT * FROM sanpham where deleted=1 ";
+$sumrow = $conn->query($sql);
+$sumrow = mysqli_num_rows($sumrow);
+//đếm số sản phẩm đã xóa
+$sql2 = "SELECT * FROM sanpham where deleted=0 ";
+$daxoa = $conn->query($sql2);
+$daxoa = mysqli_num_rows($daxoa);
+//user
+$sql4 = "SELECT * FROM user ";
+$user_c = $conn->query($sql4);
+$user_c = mysqli_num_rows($user_c);
+// admin
+$sql5 = "SELECT * FROM user where is_admin=1  ";
+$admin_c = $conn->query($sql5);
+$admin_c = mysqli_num_rows($admin_c);
+//đếm số danh mục
+$sql3 = "SELECT * FROM danhmuc ";
+$dm_cout = $conn->query($sql3);
+$dm_cout = mysqli_num_rows($dm_cout);
+// đếm blog
+$sql4 = "SELECT * FROM blog ";
+$blog_cout = $conn->query($sql4);
+$blog_cout = mysqli_num_rows($blog_cout);
 
-      $sql_on = "SELECT * FROM blog where `render`=1 ";
-      $blog_on = $conn->query($sql_on);
-      $blog_on = mysqli_num_rows( $blog_on);
+$sql_on = "SELECT * FROM blog where `render`=1 ";
+$blog_on = $conn->query($sql_on);
+$blog_on = mysqli_num_rows($blog_on);
 
-    
-    // đếm số hóa đơn
-    $sql6 = "SELECT * FROM hoadon ";
-    $hoadon = $conn->query($sql6);
-    $hoadon = mysqli_num_rows( $hoadon);
 
-      $sql7 = "SELECT * FROM hoadon  where `user_id` = '0' ";
-      $hoadon2 = $conn->query($sql7);
-      $hoadon2 = mysqli_num_rows( $hoadon2);
+// đếm số hóa đơn
+$sql6 = "SELECT * FROM hoadon ";
+$hoadon = $conn->query($sql6);
+$hoadon = mysqli_num_rows($hoadon);
+
+$sql7 = "SELECT * FROM hoadon  where `user_id` = '0' ";
+$hoadon2 = $conn->query($sql7);
+$hoadon2 = mysqli_num_rows($hoadon2);
 
 
 
@@ -114,7 +114,9 @@
       <div class="navbar-menu-wrapper d-flex align-items-top">
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold"><?=$_SESSION['username']?></span></h1>
+            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">
+                <?= $_SESSION['username'] ?>
+              </span></h1>
             <h3 class="welcome-sub-text">tóm tắt hiệu suất trong tuần này </h3>
           </li>
         </ul>
@@ -255,28 +257,35 @@
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
                 <img class="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3 font-weight-semibold"><?=$_SESSION['username']?></p>
-                <p class="fw-light text-muted mb-0"><?=$_SESSION['gmail']?></p>
+                <p class="mb-1 mt-3 font-weight-semibold">
+                  <?= $_SESSION['username'] ?>
+                </p>
+                <p class="fw-light text-muted mb-0">
+                  <?= $_SESSION['gmail'] ?>
+                </p>
               </div>
-              <a href="../../html/Profile.php" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> profile <span class="badge badge-pill badge-danger">1</span></a>
+              <a href="../../html/Profile.php" class="dropdown-item"><i
+                  class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> profile <span
+                  class="badge badge-pill badge-danger">1</span></a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i>
                 Messages</a>
               <a class="dropdown-item"><i
                   class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i>
                 FAQ</a>
-              <a href='<?= $_SESSION['login']!=1?"../../login.php":"../../logout.php" ?>' class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>
-              
-                <?php 
-                 if(isset($_SESSION['login']))
-                 {
-                  if($_SESSION['login']==1) 
-                    $a="đăng xuất";
-                  else $a=" đăng nhập"; 
-                 
-                 }
-                 else $a="chưa đăng nhập";
-                 echo "$a"; 
+              <a href='<?= $_SESSION['login'] != 1 ? "../../login.php" : "../../logout.php" ?>' class="dropdown-item"><i
+                  class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>
+
+                <?php
+                if (isset($_SESSION['login'])) {
+                  if ($_SESSION['login'] == 1)
+                    $a = "đăng xuất";
+                  else
+                    $a = " đăng nhập";
+
+                } else
+                  $a = "chưa đăng nhập";
+                echo "$a";
                 ?>
               </a>
             </div>
@@ -538,6 +547,11 @@
                 <li class="nav-item"> <a class="nav-link" href="pages/hoadon/Ds_hoadon.php">danh sách hóa đơn</a></li>
               </ul>
             </div>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/hoadon/sulyhoadon.php">sử lý hóa đơn</a></li>
+              </ul>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
@@ -556,18 +570,7 @@
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-              <i class="menu-icon mdi mdi-layers-outline"></i>
-              <span class="menu-title">Icons</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="icons">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a></li>
-              </ul>
-            </div>
-          </li>
+
           <li class="nav-item nav-category">người dùng</li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
@@ -578,17 +581,12 @@
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
                 <!-- <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li> -->
-                <li class="nav-item"> <a class="nav-link" href="pages/nguoidung/nguoidung2.php"> danh sách tài khoản </a></li>
-              </ul>                                           
+                <li class="nav-item"> <a class="nav-link" href="pages/nguoidung/nguoidung2.php"> danh sách tài khoản
+                  </a></li>
+              </ul>
             </div>
           </li>
-          <li class="nav-item nav-category">help</li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://bootstrapdash.com/demo/star-admin2-free/docs/documentation.html">
-              <i class="menu-icon mdi mdi-file-document"></i>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li>
+
         </ul>
       </nav>
       <!-- partial -->
@@ -598,24 +596,7 @@
             <div class="col-sm-12">
               <div class="home-tab">
                 <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                  <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                      <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab"
-                        aria-controls="overview" aria-selected="true">Overview</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#audiences" role="tab"
-                        aria-selected="false">Audiences</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#demographics" role="tab"
-                        aria-selected="false">Demographics</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab"
-                        aria-selected="false">More</a>
-                    </li>
-                  </ul>
+
                   <!-- <div>
                     <div class="btn-wrapper">
                       <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
@@ -631,28 +612,46 @@
                         <div class="statistics-details d-flex align-items-center justify-content-between">
                           <div>
                             <p class="statistics-title">số sản phẩm</p>
-                            <h3 class="rate-percentage"><?=$sumrow?></h3>
-                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>đã xóa: <?=$daxoa?></span></p>
+                            <h3 class="rate-percentage">
+                              <?= $sumrow ?>
+                            </h3>
+                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>đã xóa:
+                                <?= $daxoa ?>
+                              </span></p>
                           </div>
                           <div>
                             <p class="statistics-title">số danh mục</p>
-                            <h3 class="rate-percentage"><?=$dm_cout?></h3>
+                            <h3 class="rate-percentage">
+                              <?= $dm_cout ?>
+                            </h3>
                             <!-- <p class="text-success d-flex"><span></span></p> -->
                           </div>
                           <div>
                             <p class="statistics-title">số tài khoản</p>
-                            <h3 class="rate-percentage"><?=$user_c?></h3>
-                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>admin : <?=$admin_c?></span></p>
+                            <h3 class="rate-percentage">
+                              <?= $user_c ?>
+                            </h3>
+                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>admin :
+                                <?= $admin_c ?>
+                              </span></p>
                           </div>
                           <div class="d-none d-md-block">
                             <p class="statistics-title">blog</p>
-                            <h3 class="rate-percentage"><?=$blog_cout?></h3>
-                            <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>blog đang hoạt động: <?=$blog_on?></span></p>
+                            <h3 class="rate-percentage">
+                              <?= $blog_cout ?>
+                            </h3>
+                            <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>blog đang hoạt động:
+                                <?= $blog_on ?>
+                              </span></p>
                           </div>
                           <div class="d-none d-md-block">
                             <p class="statistics-title">hóa đơn</p>
-                            <h3 class="rate-percentage"><?=$hoadon?></h3>
-                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>hóa đơn ko tài khoản: <?=$hoadon2?></span></p>
+                            <h3 class="rate-percentage">
+                              <?= $hoadon ?>
+                            </h3>
+                            <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>hóa đơn ko tài khoản:
+                                <?= $hoadon2 ?>
+                              </span></p>
                           </div>
                           <!-- <div class="d-none d-md-block">
                             <p class="statistics-title">Avg. Time on Site</p>
@@ -662,27 +661,64 @@
                         </div>
                       </div>
                     </div>
+                    <!-- //////////// biểu đồ sản phẩm thịnh hành -->
+                    <?php
+                    require_once("./Bieudo/bieudospbanchay.php");
+                    // Thực thi câu lệnh SQL và lấy kết quả
+                    $get_yearhd = mysqli_query($conn, "SELECT DISTINCT  YEAR (STR_TO_DATE (time, '%Y%m%d')) as 'year' FROM hoadon");
+
+                    ?>
+                    <div>
+                      <div
+                        style="width: 27%;   background-color: white;       padding: 2px 0 0 11px;  border-radius: 0 0 0 22px;   aspect-ratio: 2/2;">
+                        biểu đồ sản phẩm nổi bật theo năm :
+                        <?= isset($_POST['bieudo_nam']) ? $_POST['bieudo_nam'] : date('Y') ?>
+                        <span>
+                          <form action="?bieudo_nam" method="post">
+                            <select name="bieudo_nam">
+                              <?php
+                              if ($get_yearhd->num_rows > 0)
+                                while ($row = $get_yearhd->fetch_assoc()) {
+                                  ?>
+                                  <option value="<?= $row['year'] ?>">
+                                    <?= $row['year'] ?>
+                                  </option>
+                                  <?php
+                                }
+                              ?>
+
+                            </select>
+                            <input type="submit" value="Submit">
+                          </form>
+                        </span>
+
+                        <?php
+                        if (isset($_POST['bieudo_nam']))
+                          $year = $_POST['bieudo_nam'];
+                        else
+                          $year = date('Y');
+                        // echo date('yy');
+                        bieuDospthinhhanh($year);
+                        ?>
+                      </div>
+                      <!-- ////// todo  -->
+                      <div>
+                        <h2>việc cần làm</h2>
+                      </div>
+                    </div>
+                    <!-- ////// biểu đồ tổng doanh  thu teo tuần  -->
                     <div class="row">
                       <div class="col-lg-12 d-flex flex-column">
                         <div class="row flex-grow">
                           <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
                             <div class="card card-rounded">
                               <div class="card-body">
+
                                 <?php
-                                  require('./democharjs.php');
-                                  bieudo_tien();
+                                require('./democharjs.php');
+                                bieudo_tien();
                                 ?>
-                                <!-- <div class="d-sm-flex justify-content-between align-items-start">
-                                  <div>
-                                    <h4 class="card-title card-title-dash">Performance Line Chart</h4>
-                                    <h5 class="card-subtitle card-subtitle-dash">Lorem Ipsum is simply dummy text of the
-                                      printing</h5>
-                                  </div>
-                                  <div id="performance-line-legend"></div>
-                                </div> -->
-                                <!-- <div class="chartjs-wrapper mt-5">
-                                  <canvas id="performaneLine"></canvas>
-                                </div> -->
+
                               </div>
                             </div>
                           </div>
@@ -1094,42 +1130,7 @@
                                             </div>
                                           </div>
                                         </li>
-                                        <li class="d-block">
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text
-                                              of the printing <i class="input-helper rounded"></i>
-                                            </label>
-                                            <div class="d-flex mt-2">
-                                              <div class="ps-4 text-small me-3">23 June 2020</div>
-                                              <div class="badge badge-opacity-success me-3">Done</div>
-                                            </div>
-                                          </div>
-                                        </li>
-                                        <li>
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text
-                                              of the printing <i class="input-helper rounded"></i>
-                                            </label>
-                                            <div class="d-flex mt-2">
-                                              <div class="ps-4 text-small me-3">24 June 2020</div>
-                                              <div class="badge badge-opacity-success me-3">Done</div>
-                                            </div>
-                                          </div>
-                                        </li>
-                                        <li class="border-bottom-0">
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                              <input class="checkbox" type="checkbox"> Lorem Ipsum is simply dummy text
-                                              of the printing <i class="input-helper rounded"></i>
-                                            </label>
-                                            <div class="d-flex mt-2">
-                                              <div class="ps-4 text-small me-3">24 June 2020</div>
-                                              <div class="badge badge-opacity-danger me-3">Expired</div>
-                                            </div>
-                                          </div>
-                                        </li>
+
                                       </ul>
                                     </div>
                                   </div>

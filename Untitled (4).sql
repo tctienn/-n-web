@@ -49,6 +49,9 @@ CREATE TABLE `user` (
 );
 
 CREATE TABLE `cart` (
+
+`id_vaicut` int PRIMARY KEY AUTO_INCREMENT,
+
   `id_user` int(11),
   `id_sp` int(11) DEFAULT NULL,
   `soluong` int(150) DEFAULT NULL,

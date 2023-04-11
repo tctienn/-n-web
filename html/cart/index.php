@@ -4,6 +4,7 @@
     $_SESSION['tong']=0;
   
   require_once ("../../classes/dbConnection.php");
+  require ('../../functions/Addcart.php');
   // require_once ("../../functions/Thanhtoan.php");
   // thanhtoan();exit;
   $dbConnection = new dbConnection();
@@ -14,9 +15,13 @@
   {
       // unset($_SESSION['cart'][$_GET['remove']]);  xóa cả giá trị lẫn vị trí của phẩn tử
       array_splice($_SESSION['cart'], $_GET['remove'], 1);
+
+      remote_cart($_GET['user'],$_GET['idsp'],$_GET['gia'],$_GET['soluong']);
+
   }
     
   // var_dump($_SESSION['cart'][0]);exit;
+  //// bắt sự kiện xác nhận thay đổi trong thẻ cart
   if(isset($_GET['tong']) && $_GET['tong']>0)
   {
     for($i=0; $i<count($_SESSION['cart']);$i++)
@@ -25,6 +30,8 @@
       $_SESSION['cart'][$i]->cout=$_GET["cout$i"];
       $_SESSION['tong']=$_GET['tong'];
       
+      // update_product($_GET["id$i"],$_GET["cout$i"]);
+      updatecart($_SESSION['id_user'],$_GET["id$i"],$_GET["gia$i"],$_GET["cout$i"], date("Ymd") );
 
     }
   }
@@ -62,13 +69,15 @@
 
   <?php $sum=0?>
   <?php
- 
+  // var_dump($_SESSION['cart']);exit;
   for($i=0;$i<count($_SESSION['cart']);$i++)
   {
     // echo count($_SESSION['cart']);exit;
     $sql = "SELECT * FROM `sanpham` WHERE id=".$_SESSION['cart'][$i]->id;
     $getdanhmuc = $conn->query($sql);
+    
     if ($getdanhmuc->num_rows > 0) {
+      
       $row = $getdanhmuc->fetch_assoc();
       // echo $row['name'];
       
@@ -82,15 +91,27 @@
             <div class="product-title"><?=$row['name']?></div>
             <p class="product-description"><?=$row['mota']?></p>
           </div>
-          <div class="product-price"> <?= number_format($row["gia"],0,",",".");  ?>đ</div>
+          <div class="product-price"> <?= number_format($_SESSION["cart"][$i]->gia,0,",",".");  ?>đ</div>
           <div class="product-quantity"><?php $as="cout". $i; ?>
             <input type="number" form="check" name="<?=$as?>" value="<?=$_SESSION['cart'][$i]->cout;?>" min="1">
             
+            <?php
+              $id="id". $i;
+              ?>
+                <input type="hidden" form="check" name="<?=$id?>" value="<?=$_SESSION['cart'][$i]->id;?>" min="1">
+              <?php
+              $gia="gia". $i;
+              // var_dump($_SESSION['cart']);exit;
+              ?>
+                <input type="hidden" form="check" name="<?=$gia?>" value="<?=$row["gia"];?>" min="1">
+              <?php
+            ?>
             <!-- <input type="submit"> -->
           </div>
           
           <div class="product-removal">
-            <a href="?remove=<?=$i?>">
+          <!-- $id_user,$id_sp,$gia -->
+            <a href="?remove=<?=$i?>&user=<?=$_SESSION['id_user']?>&idsp=<?=$row['id']?>&gia=<?=$_SESSION["cart"][$i]->gia?>&soluong=<?=$_SESSION["cart"][$i]->cout?>">
               <button class="remove-product">
                 Remove
               </button>

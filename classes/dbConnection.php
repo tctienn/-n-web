@@ -9,7 +9,7 @@ class dbConnection
     private $servername = "localhost";
     private $username = "root";
     private $password = "";
-    private $dbname = "tee3";
+    private $dbname = "tee5";
 
     public function __construct()
     {

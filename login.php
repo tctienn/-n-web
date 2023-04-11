@@ -5,6 +5,7 @@ $_SESSION['login']='0';
 // require_once("functions/functions.php");
 // require_once("config.php");
 require_once("classes/dbConnection.php");
+// $ui = 'ay';
 
 // $username = getValue("username", "POST", "str", "");
 // $password = getValue("password", "POST", "str", "");
@@ -42,13 +43,20 @@ if (isset($_GET['action']) && $_GET['action'] == "login") {
     // }
     $dbConnection = new dbConnection();
     $conn = $dbConnection->getConnection();
+    
+
+    
     // $username="";
     try {
         //code...
+        
         $sql = "SELECT * FROM user WHERE usename = '$username' AND password=md5('$password')";
         $result = $conn->query($sql);
         if ($result->num_rows != 0) {
-            {   $errorMsg=''; 
+            {   
+                require_once("add_sesion_login.php");
+
+                $errorMsg=''; 
                 $row = $result->fetch_assoc(); 
                 if ($row["is_admin"]==1) {
                     // Success

@@ -1,42 +1,36 @@
 <?php
-  require("../../../../classes/dbConnection.php"); 
+require("../../../../classes/dbConnection.php");
 
-  ////
-  session_start();
-      
-  if(isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_SESSION['gmail']) )
-  {
-   
-    
+////
+session_start();
 
-    if($_SESSION['login']==1)
-    {
-      $gmail= $_SESSION['gmail'];
-      $username=$_SESSION['username'];
-    }
-    else{
-      $gmail="";
-      $username="";
-    }
+if (isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_SESSION['gmail'])) {
+
+
+
+  if ($_SESSION['login'] == 1) {
+    $gmail = $_SESSION['gmail'];
+    $username = $_SESSION['username'];
+  } else {
+    $gmail = "";
+    $username = "";
   }
-  
-  if(isset($_POST['search']) && $_POST['search'] !="")
-  {
-    $search = "where order_id= '".$_POST['search']."'";
-  }
-  else
-  {
-    $search="";
-  }
+}
 
-  ///
+if (isset($_POST['search']) && $_POST['search'] != "") {
+  $search = "where order_id= '" . $_POST['search'] . "'";
+} else {
+  $search = "";
+}
 
-  $dbConnection = new dbConnection();
-  $conn = $dbConnection->getConnection();
-  $sql = "SELECT * FROM hoadon ".$search."  ORDER BY `time` ASC  "; // limit "offset", "limit"
-  
-  $result = $conn->query($sql);
- 
+///
+
+$dbConnection = new dbConnection();
+$conn = $dbConnection->getConnection();
+$sql = "SELECT * FROM hoadon " . $search . "  ORDER BY `time` ASC  "; // limit "offset", "limit"
+
+$result = $conn->query($sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +79,9 @@
       <div class="navbar-menu-wrapper d-flex align-items-top">
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold"><?=$username?></span></h1>
+            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">
+                <?= $username ?>
+              </span></h1>
             <h3 class="welcome-sub-text"> </h3>
           </li>
         </ul>
@@ -226,8 +222,12 @@
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
                 <img class="img-md rounded-circle" src="../../images/faces/face8.jpg" alt="Profile image">
-                <p class="mb-1 mt-3 font-weight-semibold"><?=$username?></p>
-                <p class="fw-light text-muted mb-0"><?=$gmail?></p>
+                <p class="mb-1 mt-3 font-weight-semibold">
+                  <?= $username ?>
+                </p>
+                <p class="fw-light text-muted mb-0">
+                  <?= $gmail ?>
+                </p>
               </div>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My
                 Profile <span class="badge badge-pill badge-danger">1</span></a>
@@ -237,18 +237,19 @@
                   class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
               <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i>
                 FAQ</a>
-              <a href='<?= $_SESSION['login']!=1?"../../../../login.php":"../../../../logout.php" ?>' class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>
-            
-                <?php 
-                if(isset($_SESSION['login']))
-                {
-                  if($_SESSION['login']==1) 
-                    $a="đăng xuất";
-                  else $a=" đăng nhập"; 
-                
-                }
-                else $a="chưa đăng nhập";
-                echo "$a"; 
+              <a href='<?= $_SESSION['login'] != 1 ? "../../../../login.php" : "../../../../logout.php" ?>'
+                class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>
+
+                <?php
+                if (isset($_SESSION['login'])) {
+                  if ($_SESSION['login'] == 1)
+                    $a = "đăng xuất";
+                  else
+                    $a = " đăng nhập";
+
+                } else
+                  $a = "chưa đăng nhập";
+                echo "$a";
                 ?>
               </a>
             </div>
@@ -448,7 +449,7 @@
       <!-- partial:../../partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-        <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="../../index_admin.php">
               <i class="mdi mdi-grid-large menu-icon"></i>
               <span class="menu-title">Dashboard</span>
@@ -535,8 +536,9 @@
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
                 <!-- <li class="nav-item"> <a class="nav-link" href="../samples/login.html"> Login </a></li> -->
-                <li class="nav-item"> <a class="nav-link" href="../nguoidung/nguoidung2.php"> danh sách tài khoản </a></li>
-              </ul>                                           
+                <li class="nav-item"> <a class="nav-link" href="../nguoidung/nguoidung2.php"> danh sách tài khoản </a>
+                </li>
+              </ul>
             </div>
           </li>
           <li class="nav-item nav-category">help</li>
@@ -551,7 +553,7 @@
       <!-- partial -->
       <!-- //////////////////////////////// -->
       <div class="main-panel">
-        <table border=1 >
+        <table border=1>
           <tr style=" border: solid 1px black;">
             <th>id</th>
             <th>mã hóa đơn</th>
@@ -563,26 +565,44 @@
             <th>id_user</th>
           </tr>
           <?php
-            $cou=0;
-            if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                $cou++;
-                ?>
+          $cou = 0;
+          if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+              $cou++;
+              ?>
 
-                  <tr style="<?php if($cou%2==0){echo "background-color: #ffe7e7";} ?>">
-                    <td><?=$row['id']?></td>
-                    <td><?=$row['order_id']?></td>
-                    <td><?=$row['note']?></td>
-                    <td><?=$row['ma_gd']?></td>
-                    <td><?=$row['money']?></td>
-                    <td><?=$row['code_bank']?></td>
-                    <td><?= date("d/m/Y", strtotime($row['time']))?></td>      
-                    <td><?=$row['user_id']?></td>
-                  </tr>
-                
-                <?php
-              }
+              <tr style="<?php if ($cou % 2 == 0) {
+                echo "background-color: #ffe7e7";
+              } ?>">
+                <td>
+                  <?= $row['id'] ?>
+                </td>
+                <td>
+                  <?= $row['order_id'] ?>
+                </td>
+                <td>
+                  <?= $row['note'] ?>
+                </td>
+                <td>
+                  <?= $row['ma_gd'] ?>
+                </td>
+                <td>
+                  <?= $row['money'] ?>
+                </td>
+                <td>
+                  <?= $row['code_bank'] ?>
+                </td>
+                <td>
+                  <?= date("d/m/Y", strtotime($row['time'])) ?>
+                </td>
+                <td>
+                  <?= $row['user_id'] ?>
+                </td>
+              </tr>
+
+              <?php
             }
+          }
 
           ?>
         </table>

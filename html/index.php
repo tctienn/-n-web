@@ -1,5 +1,9 @@
 <?php
     session_start();
+    // var_dump($_SESSION['cart']);exit;
+
+    require ('../classes/dbConnection.php');
+    require ('../functions/Addcart.php');
     if(!isset($_SESSION['username']) || !isset($_SESSION['gmail'] ))
     {
         $_SESSION['username']="";
@@ -10,6 +14,12 @@
     $pro = new stdclass;
     $pro->id="";
     $pro->cout=0;
+    if(isset($_GET['login']) && $_GET['login']=='out')
+    {
+        $_SESSION['login']=0;
+        unset($_SESSION ["cart"]);
+        
+    } 
     
     if(!isset($_SESSION['cart']))
         {           
@@ -18,24 +28,53 @@
         else 
             if(isset($_GET['cart']) && $_GET['cart']="true")
             {
-                if(isset($_GET['id']))
-                {
-                    $a=0;  //phần này để kiểm tra xem sản phẩn đã có trong giỏ hàng chưa nếu chưa có thì sẽ cộng 1 để hiển thị số trong icon giỏ hàng
-                    for($i=0;$i<count($_SESSION['cart']);$i++)
+                if(isset($_SESSION['login']) && $_SESSION['login'] == 1 ){
+                    if(isset($_GET['id']))
                     {
-                        if($_SESSION['cart'][$i]->id==$_GET['id'])
+                        $a=0;  //phần này để kiểm tra xem sản phẩn đã có trong giỏ hàng chưa nếu chưa có thì sẽ cộng 1 để hiển thị số trong icon giỏ hàng
+                        for($i=0;$i<count($_SESSION['cart']);$i++)
                         {
-                            $a=1;
-                            $_SESSION['cart'][$i]->cout+=1;
+                            if($_SESSION['cart'][$i]->id==$_GET['id'])
+                            {
+                                $a=1;
+                                if($_SESSION['cart'][$i]->gia==$_GET['gia']){
+                                    // var_dump($_SESSION['cart'][$i]->gia); exit;
+                                    $_SESSION['cart'][$i]->cout+=1;
+
+                                    update_product($_GET['id'],1);
+                                    updatecart_c($_SESSION['id_user'],$_GET['id'],$_GET['gia'],1, date("Ymd") );
+                                    break;
+                                }else{
+                                    // var_dump($_SESSION['cart'][$i]->gia); exit;
+                                    $_SESSION['cart'][$i]->cout+=1;
+
+                                    update_product($_GET['id'],1);
+                                    updatecart_c($_SESSION['id_user'],$_GET['id'],$_GET['gia'],1, date("Ymd") );
+                                    break;
+                                }
+                                // thêm số lượng
+                            }
                         }
+                        if($a!=1)
+                        {
+                            // $pro->id=$_GET['id'];
+                            // $pro->cout=1;
+                            // array_push($_SESSION['cart'], $pro);
+                            push_session($_SESSION['id_user'],$_GET['id'],$_GET['gia'],1, date("Ymd") );
+
+                            update_product($_GET['id'],1);
+                            addcart($_SESSION['id_user'],$_GET['id'],$_GET['gia'],1, date("Ymd") );
+                            // thêm sản phẩm vào cart
+                            
+                        }
+                        
                     }
-                    if($a!=1)
-                    {
-                        $pro->id=$_GET['id'];
-                        $pro->cout=1;
-                        array_push($_SESSION['cart'], $pro);
-                    }
-                    
+                }else{
+                    ?>
+                        <Script>
+                             alert("bạn cần đăng nhập để có thể sử dụng chức năng này ");
+                        </Script>
+                    <?php
                 }
                 
             }
@@ -53,7 +92,7 @@
     
     if(!isset($_SESSION['login']))
         $_SESSION['login']='0';
-    require ('../classes/dbConnection.php');
+    
     if(isset($_GET['trang']))
     {
         $trang=$_GET['trang']*15;
@@ -144,11 +183,7 @@
                         
                     <iconify-icon icon="mdi:human-male-board" style="color: white; margin-top: -15px;" width="27" height="31"></iconify-icon>&nbsp;
                     <?php
-                        if(isset($_GET['login']) && $_GET['login']=='out')
-                        {
-                            $_SESSION['login']=0;
-                            
-                        }
+                        
                         if($_SESSION['login']==1)
                         {
                             
@@ -650,7 +685,7 @@
                                     <p>
                                         <b><?=$row['sp_gia']?>đ</b>/hộp
                                     </p>
-                                    <a href="?cart=true&id=<?=$row['sp_id']?>"><iconify-icon class="shopping-cart" icon="el:shopping-cart" style="color: black; margin-top: -15px; float: right;" width="27"height="31"></iconify-icon> </a>
+                                    <a href="?cart=true&id=<?=$row['sp_id']?>&gia=<?=$row['sp_gia']?> "><iconify-icon class="shopping-cart" icon="el:shopping-cart" style="color: black; margin-top: -15px; float: right;" width="27"height="31"></iconify-icon> </a>
                                 </div>
                              
                         <?php
